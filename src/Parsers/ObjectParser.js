@@ -7,7 +7,7 @@ export default class ObjectParser {
         this.parser = parser;
     }
     canParse(node) {
-        return !!node.properties;
+        return !!node.properties || node["x-embedded"];
     }
 
     parse(node) {
@@ -18,9 +18,16 @@ export default class ObjectParser {
         let ret = {};
         let schema = hoek.clone(node);
         schema = schema.properties || schema;
-        
-        for (let k in schema) {
-            ret[k] = this.parser.parse(schema[k]);
+
+        if (node["x-embedded"]) {
+            schema = node.schema;
+            ret = this.parser.parse(schema);
+        } else {
+            schema = _hoek2['default'].clone(node);
+            schema = schema.properties || schema;
+            for (var k in schema) {
+                ret[k] = this.parser.parse(schema[k]);
+            }
         }
 
         return ret;
