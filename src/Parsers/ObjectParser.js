@@ -23,7 +23,6 @@ export default class ObjectParser {
             schema = node.schema;
             ret = this.parser.parse(schema);
         } else {
-            schema = _hoek2['default'].clone(node);
             schema = schema.properties || schema;
             for (var k in schema) {
                 ret[k] = this.parser.parse(schema[k]);

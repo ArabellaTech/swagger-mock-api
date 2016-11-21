@@ -16,7 +16,7 @@ var _chance2 = _interopRequireDefault(_chance);
 
 var _hoek = require('hoek');
 
-var _hoek3 = _interopRequireDefault(_hoek);
+var _hoek2 = _interopRequireDefault(_hoek);
 
 var chance = new _chance2['default']();
 
@@ -41,14 +41,13 @@ var ObjectParser = (function () {
         key: 'generateObject',
         value: function generateObject(node) {
             var ret = {};
-            var schema = _hoek3['default'].clone(node);
+            var schema = _hoek2['default'].clone(node);
             schema = schema.properties || schema;
 
             if (node["x-embedded"]) {
                 schema = node.schema;
                 ret = this.parser.parse(schema);
             } else {
-                schema = _hoek2['default'].clone(node);
                 schema = schema.properties || schema;
                 for (var k in schema) {
                     ret[k] = this.parser.parse(schema[k]);
